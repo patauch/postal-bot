@@ -1,6 +1,7 @@
 import logging
 
 from aiogram import Bot, Dispatcher, Router, types
+from aiogram import F
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.types import Message
@@ -23,6 +24,11 @@ async def command_start_handler(message:Message) -> None:
 async def cmd_dice(message: types.Message):
     await message.answer_dice(emoji=emoji.emojize('🎲'))
 
+@router.message(F.text)
+async def handle_text(message: types.Message):
+    reply = f"You sent text and i got it, {message.text}"
+    await message.answer(reply)
+    await message.reply(reply)
 
 @router.message()
 async def echo_handler(message: types.Message) -> None:
